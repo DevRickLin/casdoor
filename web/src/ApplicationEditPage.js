@@ -46,6 +46,13 @@ const template = {
   backgroundColor: "#ffffff",
   boxShadow: " 0px 0px 20px rgba(0, 0, 0, 0.20)",
 };
+const sidetemplate = {
+  padding: "30px",
+  border: "2px solid #ffffff",
+  borderRadius: "7px",
+  backgroundColor: "#ffffff",
+  boxShadow: " 0px 0px 20px rgba(0, 0, 0, 0.20)",
+};
 
 class ApplicationEditPage extends React.Component {
   constructor(props) {
@@ -157,6 +164,7 @@ class ApplicationEditPage extends React.Component {
   }
 
   renderSidePictureOption() {
+    const sidepreview = JSON.stringify(sidetemplate, null, 2);
     return (
       <Row>
         <Col style={{marginTop: "5px"}} span={(Setting.isMobile()) ? 22 : 2}>
@@ -181,6 +189,27 @@ class ApplicationEditPage extends React.Component {
               <a target="_blank" rel="noreferrer" href={this.state.application.sidePicture}>
                 <img src={this.state.application.sidePicture} alt={this.state.application.sidePicture} height={90} style={{marginBottom: "20px"}} />
               </a>
+            </Col>
+          </Row>
+          <Row>
+            <Col style={{marginTop: "5px"}} span={(Setting.isMobile()) ? 22 : 2}>
+              {Setting.getLabel(i18next.t("application:SidePic Css"), i18next.t("application:SidePic Css - Tooltip"))} :
+            </Col>
+            <Col span={22}>
+              <Popover placement="right" content={
+                <div style={{width: "900px", height: "300px"}} >
+                  <CodeMirror value={this.state.application.SidePicCss === "" ? sidepreview : this.state.application.SidePicCss}
+                    options={{mode: "css", theme: "material-darker"}}
+                    onBeforeChange={(editor, data, value) => {
+                      this.updateApplicationField("SidePicCss", value);
+                    }}
+                  />
+                </div>
+              } title={i18next.t("application:SidePic Css - Edit")} trigger="click">
+                <Input value={this.state.application.SidePicCss} style={{marginBottom: "10px"}} onChange={e => {
+                  this.updateApplicationField("SidePicCss", e.target.value);
+                }} />
+              </Popover>
             </Col>
           </Row>
         </Col>
