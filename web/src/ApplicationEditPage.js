@@ -135,7 +135,6 @@ class ApplicationEditPage extends React.Component {
 
   updateApplicationField(key, value) {
     value = this.parseApplicationField(key, value);
-
     const application = this.state.application;
     application[key] = value;
     this.setState({
@@ -282,6 +281,20 @@ class ApplicationEditPage extends React.Component {
           <Col span={1} >
             <Switch checked={this.state.application.enableSidePicture} onChange={checked => {
               this.updateApplicationField("enableSidePicture", checked);
+              checked ? this.updateApplicationField("SidePicCss", JSON.stringify({
+                "padding": "30px",
+                "borderBottomLeftRadius": "10px",
+                "borderTopLeftRadius": "10px",
+                "backgroundColor": "#ffffff",
+                "boxShadow": " 0px 0px 20px rgba(0, 0, 0, 0.20)",
+              })) : null;
+              checked ? this.updateApplicationField("FormCss", JSON.stringify({
+                padding: "30px",
+                borderBottomRightRadius: "10px",
+                borderTopRightRadius: "10px",
+                backgroundColor: "#ffffff",
+                boxShadow: " 0px 0px 20px rgba(0, 0, 0, 0.20)",
+              })) : null;
             }} />
           </Col>
         </Row>
