@@ -687,7 +687,7 @@ class LoginPage extends React.Component {
       );
     }
   }
-  renderSidePicture(application, formStyle) {
+  renderSidePicture(application, sideStyle, formStyle) {
 
     const isFullSize = () => this.state.dimensions.width > 1100;
 
@@ -719,12 +719,12 @@ class LoginPage extends React.Component {
           style={{height: "480px", minWidth: isFullSize() ? "800px" : "440px", maxWidth: "800px", display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "1rem", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px"}}>
           {
             isFullSize() ?
-              <div className="login-img" style={{width: "100%", minWidth: "400px", minHeight: "480px", height: "100%", display: "flex", flexGrow: 1, flexBasis: 0, justifyContent: "center", alignItems: "center", backgroundColor: "#7f5de3", borderRadius: "1rem 0rem 0rem 1rem"}}>
+              <div className="login-img" style={{width: "100%", minWidth: "400px", minHeight: "480px", height: "100%", display: "flex", flexGrow: 1, flexBasis: 0, justifyContent: "center", alignItems: "center", backgroundColor: "#7f5de3", borderRadius: "1rem 0rem 0rem 1rem", ...sideStyle}}>
                 <img style={{display: "block", maxWidth: "50%", height: "auto"}} src={application.sidePicture}></img>
               </div> :
               null
           }
-          <div className="login-content" style={{flexGrow: 1, flexBasis: 0}}>
+          <div className="login-content" style={{flexGrow: 1, flexBasis: 0, height: "100%", ...formStyle}}>
             <div style={{marginTop: "25%", marginBottom: "15%", textAlign: "center"}}>
               <SelectLanguageBox id="language-box-corner" style={{top: "15%", right: "5%"}} />
               <div>
@@ -796,12 +796,13 @@ class LoginPage extends React.Component {
     }
 
     const formStyle = Setting.inIframe() ? null : Setting.parseObject(application.formCss);
+    const sideStyle = Setting.inIframe() ? null : Setting.parseObject(application.SidePicCss);
 
     return (
       <div className="loginBackground" style={{alignItems: "center", backgroundImage: Setting.inIframe() || Setting.isMobile() ? undefined : `url(${application.formBackgroundUrl})`}}>
         <CustomGithubCorner />
         {
-          (application.enableSidePicture === true && Setting.isMobile() === false) ? this.renderSidePicture(application, formStyle) : this.renderNoSidePicture(application, formStyle)
+          (application.enableSidePicture === true && Setting.isMobile() === false) ? this.renderSidePicture(application, sideStyle, formStyle) : this.renderNoSidePicture(application, formStyle)
         }
       </div>
     );
