@@ -520,6 +520,29 @@ class SignupPage extends React.Component {
       </Modal>
     );
   }
+  rendernosidepic(application, formStyle) {
+
+    return (
+      <Row>
+        <Col span={8} offset={application.formOffset === 0 || Setting.inIframe() || Setting.isMobile() ? 8 : application.formOffset} style={{display: "flex", justifyContent: "center"}} >
+          <div className="login-content">
+            <div style={{marginBottom: "10px", textAlign: "center", ...formStyle}}>
+              <SelectLanguageBox id="language-box-corner" style={{top: formStyle !== null ? "3px" : "-20px", right: formStyle !== null ? "5px" : "-45px"}} />
+              {
+                Setting.renderHelmet(application)
+              }
+              {
+                Setting.renderLogo(application)
+              }
+              {
+                this.renderForm(application)
+              }
+            </div>
+          </div>
+        </Col>
+      </Row>
+    );
+  }
 
   renderForm(application) {
     if (!application.enableSignUp) {
@@ -615,30 +638,14 @@ class SignupPage extends React.Component {
       );
     }
 
+    // eslint-disable-next-line unused-imports/no-unused-vars
     const formStyle = Setting.inIframe() ? null : Setting.parseObject(application.formCss);
 
     return (
       <div className="loginBackground" style={{backgroundImage: Setting.inIframe() || Setting.isMobile() ? null : `url(${application.formBackgroundUrl})`}}>
         <CustomGithubCorner />
         &nbsp;
-        <Row>
-          <Col span={8} offset={application.formOffset === 0 || Setting.inIframe() || Setting.isMobile() ? 8 : application.formOffset} style={{display: "flex", justifyContent: "center"}} >
-            <div className="login-content">
-              <div style={{marginBottom: "10px", textAlign: "center", ...formStyle}}>
-                <SelectLanguageBox id="language-box-corner" style={{top: formStyle !== null ? "3px" : "-20px", right: formStyle !== null ? "5px" : "-45px"}} />
-                {
-                  Setting.renderHelmet(application)
-                }
-                {
-                  Setting.renderLogo(application)
-                }
-                {
-                  this.renderForm(application)
-                }
-              </div>
-            </div>
-          </Col>
-        </Row>
+          this.nosidepicrender(application, formStyle);
         {
           this.renderModal()
         }
